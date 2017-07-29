@@ -15,6 +15,15 @@ public class ControllerUtils {
     }
 
     public static User getUser(Authentication authentication) {
+
+        if(authentication == null) {
+            return null;
+        }
+
+        if(authentication.getPrincipal() == null) {
+            return null;
+        }
+
         return (User) authentication.getPrincipal();
     }
 

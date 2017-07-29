@@ -12,8 +12,8 @@ import java.util.Set;
  */
 public class PostCreateDTO {
 
-    public String message;
+    public String title;
     public String content;
+    public HashSet<TagDTO> tags = new HashSet<>();
 
-    public HashSet<Tag> tags = new HashSet<>();
 }

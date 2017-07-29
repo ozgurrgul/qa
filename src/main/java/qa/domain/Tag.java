@@ -9,9 +9,7 @@ public class Tag extends BaseDomain {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(unique=true)
     private String tagName;
-
     private String iconUrl;
     private String description;
 

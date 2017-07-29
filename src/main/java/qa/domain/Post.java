@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-// this class behaves as POST and ANSWER
 @Entity
 public class Post extends BaseDomain {
 
@@ -14,18 +13,20 @@ public class Post extends BaseDomain {
 
     private String title;
     private String content;
-    private int score;
     private int viewCount;
     private int answerCount;
     private int commentCount;
 
+    private int upVoteCount;
+    private int downVoteCount;
+
     @OneToOne
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Tag> tags = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Answer> answers = new HashSet<>();
 
     public Post() {}
@@ -54,14 +55,6 @@ public class Post extends BaseDomain {
         this.content = content;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public int getViewCount() {
         return viewCount;
     }
@@ -86,6 +79,10 @@ public class Post extends BaseDomain {
         this.tags = tags;
     }
 
+    public void addTags(Tag tag) {
+        getTags().add(tag);
+    }
+
     public Set<Answer> getAnswers() {
         return answers;
     }
@@ -104,5 +101,21 @@ public class Post extends BaseDomain {
 
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+    }
+
+    public int getUpVoteCount() {
+        return upVoteCount;
+    }
+
+    public void setUpVoteCount(int upVoteCount) {
+        this.upVoteCount = upVoteCount;
+    }
+
+    public int getDownVoteCount() {
+        return downVoteCount;
+    }
+
+    public void setDownVoteCount(int downVoteCount) {
+        this.downVoteCount = downVoteCount;
     }
 }
