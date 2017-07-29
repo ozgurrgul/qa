@@ -3,6 +3,7 @@ package qa.domain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,12 +26,15 @@ public class User extends BaseDomain implements UserDetails {
     @Column(unique=true)
     public String email;
 
+    @Audited
     public String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
+    @Audited
     private String displayName;
+
     private int reputation;
 
     public User(String email, String password) {
@@ -75,6 +79,5 @@ public class User extends BaseDomain implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 }

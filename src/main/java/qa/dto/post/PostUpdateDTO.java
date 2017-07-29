@@ -9,7 +9,6 @@ import java.util.HashSet;
  */
 public class PostUpdateDTO extends PostCreateDTO {
 
-    @NotBlank(message = "postId boş bırakılamaz")
     public Long postId;
 
     @NotBlank(message = "Düzenleme nedeni boş bırakılamaz")

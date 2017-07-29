@@ -2,6 +2,7 @@ package qa.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -14,6 +15,7 @@ public class Role {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
+    @Audited
     @Column(unique=true)
     private String roleName; // ADMIN | USER | ...
 

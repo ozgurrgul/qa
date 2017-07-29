@@ -1,6 +1,5 @@
 package qa.service;
 
-import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +47,6 @@ public class PostService {
     public Object update(PostUpdateDTO postCreateDTO, User user) {
 
         // TODO: postId için özel validator oluştur?
-        // TODO: editSummary
         Optional<Post> postOpt = postRepository.findById(postCreateDTO.postId);
 
         if(postOpt.isPresent() == false) {
@@ -58,6 +56,7 @@ public class PostService {
         Post post = postOpt.get();
         post.setTitle(postCreateDTO.title);
         post.setContent(postCreateDTO.content);
+        post.setLastEditor(user);
 
         for (TagDTO tagDTO : postCreateDTO.tags) {
             Optional<Tag> tag = tagRepository.findById(tagDTO.id);

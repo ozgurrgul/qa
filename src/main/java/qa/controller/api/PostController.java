@@ -1,6 +1,7 @@
 package qa.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +25,13 @@ public class PostController {
     @Autowired
     PostService postService;
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public Object create(@Valid @RequestBody PostCreateDTO postCreateDTO, Authentication a) {
         return postService.create(postCreateDTO, ControllerUtils.getUser(a));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public Object update(@Valid @RequestBody PostUpdateDTO postCreateDTO, Authentication a) {
         return postService.update(postCreateDTO, ControllerUtils.getUser(a));
