@@ -1,8 +1,13 @@
 package qa.domain;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
+@Data
 public class Role {
 
     @Id
@@ -12,25 +17,8 @@ public class Role {
     @Column(unique=true)
     private String roleName; // ADMIN | USER | ...
 
-    protected Role() {}
-
     public Role(String roleName) {
         this.roleName = roleName;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
 }

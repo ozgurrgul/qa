@@ -10,12 +10,12 @@ import javax.validation.constraints.Pattern;
  */
 public class AuthLoginDTO {
 
-    @NotBlank(message = "E-mail can't be empty")
+    @NotBlank(message = "E-mail boş olamaz")
     @Pattern(regexp = ".+@.+\\.[a-z]+", message = "Must be valid e-mail")
     public String email;
 
-    @NotBlank(message = "Password can't be empty")
-    @Length(min = 8, max = 50, message = "Password must be 8-10 characters")
+    @NotBlank(message = "Şifre boş olamaz")
+    @Length(min = 8, message = "Şifre minimum 8 karakterli olmalı")
     public String password;
 
 }

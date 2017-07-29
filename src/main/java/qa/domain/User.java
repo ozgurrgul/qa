@@ -1,5 +1,8 @@
 package qa.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +13,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Data
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
 public class User extends BaseDomain implements UserDetails {
 
     @Id
@@ -26,8 +32,6 @@ public class User extends BaseDomain implements UserDetails {
 
     private String displayName;
     private int reputation;
-
-    protected User() {}
 
     public User(String email, String password) {
         this.email = email;
@@ -72,31 +76,5 @@ public class User extends BaseDomain implements UserDetails {
         return true;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getReputation() {
-        return reputation;
-    }
-
-    public void setReputation(int reputation) {
-        this.reputation = reputation;
-    }
 }

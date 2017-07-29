@@ -1,9 +1,16 @@
 package qa.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
-@Entity()
-public class Vote extends BaseDomain {
+@Entity
+@Data
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+public class PostVote extends BaseDomain {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -19,4 +26,5 @@ public class Vote extends BaseDomain {
     @OneToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_POST"))
     private Post post;
+
 }

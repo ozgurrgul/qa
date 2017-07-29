@@ -1,5 +1,7 @@
 package qa.dto.post;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import qa.domain.Tag;
 
 import java.util.ArrayList;
@@ -12,8 +14,12 @@ import java.util.Set;
  */
 public class PostCreateDTO {
 
+    @NotEmpty(message = "Başlık boş bırakılamaz")
     public String title;
+
+    @NotEmpty(message = "Gönderi içeriği bol bırakılamaz")
     public String content;
+
     public HashSet<TagDTO> tags = new HashSet<>();
 
 }

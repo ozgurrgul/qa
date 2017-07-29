@@ -1,11 +1,18 @@
 package qa.domain;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Post extends BaseDomain {
+@Data
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+public class Post extends BaseDomain  {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -27,95 +34,16 @@ public class Post extends BaseDomain {
     private Set<Tag> tags = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Answer> answers = new HashSet<>();
+    private Set<Post> answers = new HashSet<>();
 
-    public Post() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Comment> comments = new HashSet<>();
 
     public void addTags(Tag tag) {
         getTags().add(tag);
     }
 
-    public Set<Answer> getAnswers() {
-        return answers;
-    }
-
-    public int getAnswerCount() {
-        return answerCount;
-    }
-
-    public void setAnswerCount(int answerCount) {
-        this.answerCount = answerCount;
-    }
-
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public int getUpVoteCount() {
-        return upVoteCount;
-    }
-
-    public void setUpVoteCount(int upVoteCount) {
-        this.upVoteCount = upVoteCount;
-    }
-
-    public int getDownVoteCount() {
-        return downVoteCount;
-    }
-
-    public void setDownVoteCount(int downVoteCount) {
-        this.downVoteCount = downVoteCount;
+    public void addComment(Comment comment) {
+        getComments().add(comment);
     }
 }

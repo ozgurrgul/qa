@@ -1,13 +1,14 @@
 package qa.service;
 
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import qa.domain.Post;
-import qa.domain.Tag;
-import qa.domain.User;
+import qa.domain.*;
 import qa.dto.post.PostCreateDTO;
+import qa.dto.post.PostUpdateDTO;
 import qa.dto.post.TagDTO;
+import qa.exception.BadRequestException;
 import qa.repository.PostRepository;
 import qa.repository.TagRepository;
 
@@ -37,13 +38,30 @@ public class PostService {
         post.setUser(user);
 
         for (TagDTO tagDTO : postCreateDTO.tags) {
-
             Optional<Tag> tag = tagRepository.findById(tagDTO.id);
+            tag.ifPresent(post::addTags);
+        }
 
-            if(tag.isPresent()) {
-                post.addTags(tag.get());
-            }
+        return postRepository.save(post);
+    }
 
+    public Object update(PostUpdateDTO postCreateDTO, User user) {
+
+        // TODO: postId için özel validator oluştur?
+        // TODO: editSummary
+        Optional<Post> postOpt = postRepository.findById(postCreateDTO.postId);
+
+        if(postOpt.isPresent() == false) {
+            throw new BadRequestException("Post bulunamadı");
+        }
+
+        Post post = postOpt.get();
+        post.setTitle(postCreateDTO.title);
+        post.setContent(postCreateDTO.content);
+
+        for (TagDTO tagDTO : postCreateDTO.tags) {
+            Optional<Tag> tag = tagRepository.findById(tagDTO.id);
+            tag.ifPresent(post::addTags);
         }
 
         return postRepository.save(post);

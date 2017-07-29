@@ -6,9 +6,12 @@ buildscript {
 		mavenCentral()
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://plugins.gradle.org/m2/" }
+
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.franzbecker:gradle-lombok:1.10"
 	}
 }
 
@@ -16,6 +19,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "io.franzbecker.gradle-lombok"
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -35,5 +39,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web-services')
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
+    compile("org.projectlombok:lombok")
 	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
 }
+

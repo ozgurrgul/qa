@@ -1,5 +1,8 @@
 package qa.domain;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
@@ -9,6 +12,8 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 
 @MappedSuperclass
+@Data
+@NoArgsConstructor
 public abstract class BaseDomain {
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,19 +34,4 @@ public abstract class BaseDomain {
         updatedAt = new Date();
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }
