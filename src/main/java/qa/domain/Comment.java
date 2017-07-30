@@ -1,6 +1,7 @@
 package qa.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Comment extends BaseDomain {
 
     @Id

@@ -59,28 +59,14 @@ public class PostVoteService {
                 postVoteRepository.delete(postVote);
                 deleted = true;
             } else {
-
-                if(postVote.getVoteType() != voteTypeRequest) {
-                    postVote.setVoteType(voteTypeRequest);
-                }
-
+                postVote.setVoteType(voteTypeRequest);
             }
 
-        }
-
-        if(voteTypeRequest == VoteType.DOWN_VOTE) {
-            post.setDownVoteCount(post.getDownVoteCount() + 1);
-        }
-
-        if(voteTypeRequest == VoteType.UP_VOTE) {
-            post.setUpVoteCount(post.getUpVoteCount() + 1);
         }
 
         if(deleted == false) {
             postVoteRepository.save(postVote);
         }
-
-        postRepository.save(post);
 
         return postVoteDTO;
     }

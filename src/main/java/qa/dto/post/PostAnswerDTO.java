@@ -1,9 +1,6 @@
 package qa.dto.post;
 
-import org.hibernate.validator.constraints.NotEmpty;
-import qa.utils.PostId;
-
-import java.util.HashSet;
+import qa.utils.validator.PostId;
 
 /**
  * Created by ozgur on 7/29/17.

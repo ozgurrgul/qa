@@ -1,7 +1,7 @@
 package qa.dto.comment;
 
 import org.hibernate.validator.constraints.NotBlank;
-import qa.utils.PostId;
+import qa.utils.validator.PostId;
 
 /**
  * Created by ozgur on 7/29/17.

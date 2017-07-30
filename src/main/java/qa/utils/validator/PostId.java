@@ -1,4 +1,4 @@
-package qa.utils;
+package qa.utils.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

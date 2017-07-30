@@ -7,10 +7,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import qa.domain.Post;
 import qa.dto.auth.AuthLoginDTO;
+import qa.dto.comment.CommentCreateDTO;
 import qa.dto.post.PostAnswerDTO;
 import qa.dto.post.PostCreateDTO;
 import qa.dto.post.PostUpdateDTO;
 import qa.dto.post.PostVoteDTO;
+import qa.service.CommentService;
 import qa.service.PostService;
 import qa.service.PostVoteService;
 import qa.utils.ControllerUtils;
@@ -30,6 +32,9 @@ public class PostController {
 
     @Autowired
     PostVoteService postVoteService;
+
+    @Autowired
+    CommentService commentService;
 
     //@PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "create", method = RequestMethod.POST)
@@ -54,6 +59,12 @@ public class PostController {
     @RequestMapping(value = "vote", method = RequestMethod.POST)
     public Object vote(@Valid @RequestBody PostVoteDTO postVoteDTO, Authentication a) {
         return postVoteService.vote(postVoteDTO, ControllerUtils.getUser(a));
+    }
+
+    //@PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "comment", method = RequestMethod.POST)
+    public Object create(@Valid @RequestBody CommentCreateDTO commentCreateDTO, Authentication a) {
+        return commentService.create(commentCreateDTO, ControllerUtils.getUser(a));
     }
 
     // To web controller

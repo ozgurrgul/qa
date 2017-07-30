@@ -1,4 +1,4 @@
-package qa.utils;
+package qa.utils.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import qa.repository.PostRepository;

@@ -1,7 +1,7 @@
 package qa.dto.post;
 
 import qa.domain.VoteType;
-import qa.utils.PostId;
+import qa.utils.validator.PostId;
 
 /**
  * Created by ozgur on 7/30/17.
