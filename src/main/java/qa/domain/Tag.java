@@ -3,7 +3,7 @@ package qa.domain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
+import org.hibernate.envers.Audited;
 import javax.persistence.*;
 
 @Entity

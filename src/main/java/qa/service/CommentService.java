@@ -33,11 +33,6 @@ public class CommentService {
     public Object create(CommentCreateDTO commentCreateDTO, User user) {
 
         Optional<Post> parent = postRepository.findById(commentCreateDTO.postId);
-
-        if(parent.isPresent() == false) {
-            throw new BadRequestException("Post bulunamadı");
-        }
-
         Comment comment = new Comment();
         comment.setUser(user);
         comment.setContent(commentCreateDTO.content);

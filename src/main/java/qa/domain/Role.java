@@ -15,7 +15,6 @@ public class Role {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Audited
     @Column(unique=true)
     private String roleName; // ADMIN | USER | ...
 

@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import qa.service.TokenService;
 
 import javax.servlet.Filter;
 
@@ -20,7 +21,7 @@ import javax.servlet.Filter;
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    public TokenRepository tokenRepository;
+    public TokenService tokenService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,7 +36,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     }
 
     private Filter getTokenAuthFilter() {
-        return new TokenAuthenticationFilter(tokenRepository);
+        return new TokenAuthenticationFilter(tokenService);
     }
 
 }

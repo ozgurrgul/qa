@@ -1,13 +1,14 @@
 package qa.dto.comment;
 
 import org.hibernate.validator.constraints.NotBlank;
+import qa.utils.PostId;
 
 /**
  * Created by ozgur on 7/29/17.
  */
 public class CommentCreateDTO {
 
-    @NotBlank(message = "postId boş bırakılamaz")
+    @PostId
     public Long postId;
 
     @NotBlank(message = "Yorum içeriği boş bırakılamaz")

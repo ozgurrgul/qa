@@ -1,12 +1,11 @@
 package qa;
 
-import qa.domain.Token;
-import qa.repository.TokenRepository;
 import qa.domain.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import qa.service.TokenService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,33 +15,20 @@ import java.io.IOException;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-    private final TokenRepository tokenRepository;
+    private final TokenService tokenService;;
 
-    TokenAuthenticationFilter(TokenRepository tokenRepository) {
-        this.tokenRepository = tokenRepository;
+    TokenAuthenticationFilter(TokenService tokenService) {
+        this.tokenService = tokenService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
 
         String tokenString = request.getHeader("token");
-
-        if(tokenString == null) {
-            continueChain(request, response, chain); // user is not authenticated here
-            return;
-        }
-
-        Token token = tokenRepository.findTokenByTokenValue(tokenString);
-
-        if(token == null) {
-            continueChain(request, response, chain); // user is not authenticated still
-            return;
-        }
-
-        User user = token.getUser();
+        User user = tokenService.getUserFromToken(tokenString);
 
         if(user == null) {
-            continueChain(request, response, chain); // user is not authenticated ...
+            continueChain(request, response, chain); // user is not authenticated here
             return;
         }
 
@@ -50,7 +36,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
         continueChain(request, response, chain);
-
     }
 
     private void continueChain(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {

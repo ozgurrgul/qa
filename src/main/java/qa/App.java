@@ -15,8 +15,8 @@ import qa.repository.PostRepository;
 import qa.service.PostService;
 
 @SpringBootApplication(exclude = {
-		SecurityAutoConfiguration.class,
-        RepositoryRestMvcAutoConfiguration.class
+    SecurityAutoConfiguration.class,
+    RepositoryRestMvcAutoConfiguration.class
 })
 @EnableTransactionManagement
 @EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
@@ -33,7 +33,7 @@ public class App {
     ) {
         return (args) -> {
 
-            postService.test();
+
         };
     }
 }
