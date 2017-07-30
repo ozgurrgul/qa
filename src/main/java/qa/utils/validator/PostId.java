@@ -5,12 +5,12 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = BasePostIdValidator.class)
+@Constraint(validatedBy = PostIdValidator.class)
 @Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BasePostId {
+public @interface PostId {
 
-    String message() default "Geçersiz basePost id";
+    String message() default "Geçersiz post id";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 

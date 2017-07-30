@@ -2,7 +2,6 @@ package qa.utils.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import qa.repository.BasePostRepository;
-import qa.repository.PostRepository;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -10,18 +9,18 @@ import javax.validation.ConstraintValidatorContext;
 /**
  * Created by ozgur on 7/30/17.
  */
-public class PostIdValidator implements ConstraintValidator<PostId, Long> {
+public class BasePostIdValidator implements ConstraintValidator<BasePostId, Long> {
 
     @Autowired
-    PostRepository postRepository;
+    BasePostRepository basePostRepository;
 
     @Override
-    public void initialize(PostId basePostId) {
+    public void initialize(BasePostId basePostId) {
     }
 
     @Override
     public boolean isValid(Long postId, ConstraintValidatorContext context) {
-        return postRepository.findById(postId).isPresent();
+        return basePostRepository.findById(postId).isPresent();
     }
 
 }
