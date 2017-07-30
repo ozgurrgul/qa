@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = PostIdValidator.class)
 @Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PostId {
+public @interface BasePostId {
 
     String message() default "Geçersiz post id";
     Class<?>[] groups() default {};

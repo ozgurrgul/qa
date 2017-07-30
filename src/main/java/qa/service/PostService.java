@@ -7,11 +7,10 @@ import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qa.domain.*;
+import qa.dto.comment.CommentCreateDTO;
 import qa.dto.post.*;
 import qa.exception.BadRequestException;
-import qa.repository.AnswerRepository;
-import qa.repository.PostRepository;
-import qa.repository.TagRepository;
+import qa.repository.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,10 +29,16 @@ public class PostService {
     PostRepository postRepository;
 
     @Autowired
+    BasePostRepository basePostRepository;
+
+    @Autowired
     AnswerRepository answerRepository;
 
     @Autowired
     TagRepository tagRepository;
+
+    @Autowired
+    CommentRepository commentRepository;
 
     @Transactional
     public Object create(PostCreateDTO postCreateDTO, User user) {
@@ -56,18 +61,18 @@ public class PostService {
     @Transactional
     public Object update(PostUpdateDTO postCreateDTO, User user) {
 
-        Optional<Post> postOpt = postRepository.findById(postCreateDTO.postId);
-        Post post = postOpt.get();
+        Optional<BasePost> postOpt = basePostRepository.findById(postCreateDTO.postId);
+        BasePost post = postOpt.get();
         post.setTitle(postCreateDTO.title);
         post.setContent(postCreateDTO.content);
         post.setLastEditor(user);
 
         for (TagDTO tagDTO : postCreateDTO.tags) {
             Optional<Tag> tag = tagRepository.findById(tagDTO.tagId);
-            tag.ifPresent(post::addTags);
+            //tag.ifPresent(post::addTags);
         }
 
-        postRepository.save(post);
+        basePostRepository.save(post);
 
         return post;
     }
@@ -82,13 +87,25 @@ public class PostService {
         answer.setContent(postAnswerDTO.content);
         answer.setUser(user);
 
-        parent.getAnswers().add(answer);
-        parent.setAnswerCount(parent.getAnswerCount());
+        parent.addAnswer(answer);
+        parent.setAnswerCount(parent.getAnswerCount() + 1);
 
         answerRepository.save(answer);
         postRepository.save(parent);
 
         return answer;
+    }
+
+    @Transactional
+    public Object comment(CommentCreateDTO commentCreateDTO, User user) {
+
+        Optional<Post> parent = postRepository.findById(commentCreateDTO.postId);
+        Comment comment = new Comment();
+        comment.setUser(user);
+        comment.setContent(commentCreateDTO.content);
+        comment.setParent(parent.get());
+
+        return commentRepository.save(comment);
     }
 
     @Transactional
@@ -104,11 +121,11 @@ public class PostService {
     public Object revisions(Long postId) {
 
         AuditReader auditReader = AuditReaderFactory.get(em);
-        List<Number> revisions = auditReader.getRevisions(Post.class, postId);
-        List<Post> posts = new ArrayList<>();
+        List<Number> revisions = auditReader.getRevisions(BasePost.class, postId);
+        List<BasePost> posts = new ArrayList<>();
 
         for (Number revision : revisions) {
-            Post postRevision = auditReader.find(Post.class, postId, revision);
+            BasePost postRevision = auditReader.find(BasePost.class, postId, revision);
             posts.add(postRevision);
         }
 

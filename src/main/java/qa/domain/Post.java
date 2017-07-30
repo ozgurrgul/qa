@@ -18,7 +18,7 @@ public class Post extends BasePost  {
     private int answerCount;
     private int viewCount;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Answer> answers = new HashSet<>();
 
     @Audited(targetAuditMode= RelationTargetAuditMode.NOT_AUDITED)
@@ -27,6 +27,10 @@ public class Post extends BasePost  {
 
     public void addTags(Tag tag) {
         getTags().add(tag);
+    }
+
+    public void addAnswer(Answer answer) {
+        getAnswers().add(answer);
     }
 
 }

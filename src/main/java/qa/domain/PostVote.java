@@ -25,6 +25,6 @@ public class PostVote extends BaseDomain {
 
     @OneToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_POST"))
-    private Post post;
+    private BasePost post;
 
 }

@@ -26,13 +26,13 @@ public class User extends BaseDomain implements UserDetails {
     @Column(unique=true)
     public String email;
 
-    @Audited
+    //@Audited
     public String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
 
-    @Audited
+    //@Audited
     private String displayName;
 
     private int reputation;

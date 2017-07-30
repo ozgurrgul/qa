@@ -29,7 +29,7 @@ public class App {
     @Bean
     @Transactional
     public CommandLineRunner loadData(
-            PostService postService
+            PostRepository postRepository
     ) {
         return (args) -> {
 

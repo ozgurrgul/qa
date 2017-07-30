@@ -12,8 +12,8 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-@MappedSuperclass
-public abstract class BasePost extends BaseDomain  {
+@Entity
+public class BasePost extends BaseDomain  {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

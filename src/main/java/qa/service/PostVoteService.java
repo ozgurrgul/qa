@@ -11,6 +11,7 @@ import qa.dto.post.PostUpdateDTO;
 import qa.dto.post.PostVoteDTO;
 import qa.dto.post.TagDTO;
 import qa.exception.BadRequestException;
+import qa.repository.BasePostRepository;
 import qa.repository.PostRepository;
 import qa.repository.PostVoteRepository;
 import qa.repository.TagRepository;
@@ -34,10 +35,13 @@ public class PostVoteService {
     @Autowired
     PostVoteRepository postVoteRepository;
 
+    @Autowired
+    BasePostRepository basePostRepository;
+
     @Transactional
     public Object vote(PostVoteDTO postVoteDTO, User user) {
 
-        Post post = postRepository.findById(postVoteDTO.postId).get();
+        BasePost post = basePostRepository.findById(postVoteDTO.postId).get();
         PostVote postVote = postVoteRepository.findByUserAndPost(user, post);
         VoteType voteTypeRequest = postVoteDTO.voteType;
 
