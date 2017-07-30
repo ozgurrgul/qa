@@ -9,7 +9,7 @@ import qa.utils.validator.BasePostId;
 public class CommentCreateDTO {
 
     @BasePostId
-    public Long postId;
+    public Long basePostId;
 
     @NotBlank(message = "Yorum içeriği boş bırakılamaz")
     public String content;

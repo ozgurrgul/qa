@@ -3,19 +3,16 @@ package qa.service;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.history.Revisions;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qa.domain.*;
 import qa.dto.comment.CommentCreateDTO;
 import qa.dto.post.*;
-import qa.exception.BadRequestException;
 import qa.repository.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +58,7 @@ public class PostService {
     @Transactional
     public Object update(PostUpdateDTO postCreateDTO, User user) {
 
-        Optional<BasePost> postOpt = basePostRepository.findById(postCreateDTO.postId);
+        Optional<BasePost> postOpt = basePostRepository.findById(postCreateDTO.basePostId);
         BasePost post = postOpt.get();
         post.setTitle(postCreateDTO.title);
         post.setContent(postCreateDTO.content);
@@ -87,10 +84,11 @@ public class PostService {
         answer.setContent(postAnswerDTO.content);
         answer.setUser(user);
 
+        answerRepository.save(answer);
+
         parent.addAnswer(answer);
         parent.setAnswerCount(parent.getAnswerCount() + 1);
 
-        answerRepository.save(answer);
         postRepository.save(parent);
 
         return answer;
@@ -99,13 +97,20 @@ public class PostService {
     @Transactional
     public Object comment(CommentCreateDTO commentCreateDTO, User user) {
 
-        Optional<Post> parent = postRepository.findById(commentCreateDTO.postId);
+        BasePost parent = basePostRepository.findById(commentCreateDTO.basePostId).get();
+
         Comment comment = new Comment();
         comment.setUser(user);
         comment.setContent(commentCreateDTO.content);
-        comment.setParent(parent.get());
 
-        return commentRepository.save(comment);
+        commentRepository.save(comment);
+
+        parent.addComment(comment);
+
+        basePostRepository.save(parent);
+
+
+        return comment;
     }
 
     @Transactional

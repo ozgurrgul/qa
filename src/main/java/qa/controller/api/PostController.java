@@ -67,7 +67,7 @@ public class PostController {
 
     // To web controller
     @RequestMapping(value = "revisions", method = RequestMethod.GET)
-    public Object revisions(@RequestParam("postId") Long postId) {
+    public Object revisions(@RequestParam("basePostId") Long postId) {
         return postService.revisions(postId);
     }
 

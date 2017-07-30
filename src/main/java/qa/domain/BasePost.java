@@ -32,7 +32,7 @@ public class BasePost extends BaseDomain  {
     @OneToOne
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "basePost")
     private Set<Comment> comments = new HashSet<>();
 
     @Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
@@ -40,6 +40,7 @@ public class BasePost extends BaseDomain  {
     private User lastEditor;
 
     public void addComment(Comment comment) {
-        getComments().add(comment);
+        comment.setBasePost(this);
+        comments.add(comment);
     }
 }

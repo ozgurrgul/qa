@@ -7,18 +7,18 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class Post extends BasePost  {
 
     private int answerCount;
     private int viewCount;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany()
     private Set<Answer> answers = new HashSet<>();
 
     @Audited(targetAuditMode= RelationTargetAuditMode.NOT_AUDITED)
@@ -30,7 +30,19 @@ public class Post extends BasePost  {
     }
 
     public void addAnswer(Answer answer) {
-        getAnswers().add(answer);
+        answer.setParent(this);
+        answers.add(answer);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Answer answer = (Answer) o;
+
+        return Objects.equals(getId(), answer.getId());
     }
 
 }
