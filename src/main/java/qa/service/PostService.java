@@ -58,8 +58,7 @@ public class PostService {
     @Transactional
     public Object update(PostUpdateDTO postCreateDTO, User user) {
 
-        Optional<BasePost> postOpt = basePostRepository.findById(postCreateDTO.basePostId);
-        BasePost post = postOpt.get();
+        BasePost post = basePostRepository.findById(postCreateDTO.basePostId).get();
         post.setTitle(postCreateDTO.title);
         post.setContent(postCreateDTO.content);
         post.setLastEditor(user);
@@ -77,8 +76,7 @@ public class PostService {
     @Transactional
     public Object answer(PostAnswerDTO postAnswerDTO, User user) {
 
-        Optional<Post> postOpt = postRepository.findById(postAnswerDTO.postId);
-        Post parent = postOpt.get();
+        Post parent = postRepository.findById(postAnswerDTO.postId).get();
 
         Answer answer = new Answer();
         answer.setContent(postAnswerDTO.content);
