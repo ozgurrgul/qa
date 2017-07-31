@@ -5,16 +5,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class Token extends BaseDomain {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private String tokenValue;
 
     @ManyToOne(fetch=FetchType.EAGER)
@@ -25,4 +22,8 @@ public class Token extends BaseDomain {
         this.tokenValue = tokenValue;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

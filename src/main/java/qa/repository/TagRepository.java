@@ -7,5 +7,5 @@ import qa.domain.Tag;
 /**
  * Created by ozgur on 7/29/17.
  */
-public interface TagRepository extends CrudRepository<Tag, Long> {
+public interface TagRepository extends CrudRepository<Tag, String> {
 }

@@ -7,17 +7,13 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @Entity
 public class BasePost extends BaseDomain  {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
 
     @Audited
     private String title;
@@ -27,6 +23,8 @@ public class BasePost extends BaseDomain  {
 
     private int downVoteCount;
     private int upVoteCount;
+
+    private int commentCount;
 
     @Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
     @OneToOne
@@ -42,5 +40,21 @@ public class BasePost extends BaseDomain  {
     public void addComment(Comment comment) {
         comment.setBasePost(this);
         comments.add(comment);
+        increaseCommentCount();
     }
+
+    public void increaseCommentCount() {
+        this.commentCount++;
+    }
+
+    public void decreaseCommentCount() {
+        this.commentCount--;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+
 }

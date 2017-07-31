@@ -11,6 +11,7 @@ import qa.dto.post.PostVoteDTO;
 import qa.service.PostService;
 import qa.service.PostVoteService;
 import qa.utils.ControllerUtils;
+import qa.utils.validator.PostId;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -67,8 +68,8 @@ public class PostController {
 
     // To web controller
     @RequestMapping(value = "revisions", method = RequestMethod.GET)
-    public Object revisions(@RequestParam("basePostId") Long postId) {
-        return postService.revisions(postId);
+    public Object revisions(@RequestParam("basePostId") Long basePostId) {
+        return postService.revisions(basePostId);
     }
 
 }

@@ -9,7 +9,7 @@ import qa.utils.validator.BasePostId;
 public class PostVoteDTO {
 
     @BasePostId
-    public Long postId;
+    public String postId;
     public VoteType voteType;
 
 }

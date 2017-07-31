@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by ozgur on 7/29/17.
  */
-public interface AnswerRepository extends CrudRepository<Answer, Long> {
+public interface AnswerRepository extends CrudRepository<Answer, String> {
 
 
 }

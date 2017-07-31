@@ -5,16 +5,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class PostVote extends BaseDomain {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
 
     @Enumerated(EnumType.STRING)
     private VoteType voteType;
@@ -27,4 +23,9 @@ public class PostVote extends BaseDomain {
     @JoinColumn(foreignKey = @ForeignKey(name = "FK_POST"))
     private BasePost post;
 
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

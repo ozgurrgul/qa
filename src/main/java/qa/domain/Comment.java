@@ -16,10 +16,6 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Comment extends BaseDomain {
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
-
     @OneToOne
     private User user;
     private String content;
@@ -30,13 +26,7 @@ public class Comment extends BaseDomain {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Comment comment = (Comment) o;
-
-        return Objects.equals(getId(), comment.getId());
+        return super.equals(o);
     }
 
 }

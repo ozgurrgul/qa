@@ -8,6 +8,6 @@ import qa.utils.validator.BasePostId;
 public class PostUpdateDTO extends PostCreateDTO {
 
     @BasePostId
-    public Long basePostId;
+    public String basePostId;
 
 }

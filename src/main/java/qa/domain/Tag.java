@@ -5,19 +5,20 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class Tag extends BaseDomain {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
 
     private String tagName;
     private String iconUrl;
     private String description;
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
 
 }

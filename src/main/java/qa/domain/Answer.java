@@ -26,12 +26,6 @@ public class Answer extends BasePost {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Answer answer = (Answer) o;
-
-        return Objects.equals(getId(), answer.getId());
+        return super.equals(o);
     }
 }

@@ -7,6 +7,6 @@ package qa.repository;
 import org.springframework.data.repository.CrudRepository;
 import qa.domain.Token;
 
-public interface TokenRepository extends CrudRepository<Token, Long> {
+public interface TokenRepository extends CrudRepository<Token, String> {
     Token findTokenByTokenValue(String tokenValue);
 }

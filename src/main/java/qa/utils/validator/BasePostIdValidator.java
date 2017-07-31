@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 /**
  * Created by ozgur on 7/30/17.
  */
-public class BasePostIdValidator implements ConstraintValidator<BasePostId, Long> {
+public class BasePostIdValidator implements ConstraintValidator<BasePostId, String> {
 
     @Autowired
     BasePostRepository basePostRepository;
@@ -19,7 +19,7 @@ public class BasePostIdValidator implements ConstraintValidator<BasePostId, Long
     }
 
     @Override
-    public boolean isValid(Long postId, ConstraintValidatorContext context) {
+    public boolean isValid(String postId, ConstraintValidatorContext context) {
         return basePostRepository.findById(postId).isPresent();
     }
 

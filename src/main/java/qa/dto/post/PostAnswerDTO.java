@@ -8,7 +8,7 @@ import qa.utils.validator.PostId;
 public class PostAnswerDTO {
 
     @PostId
-    public Long postId;
+    public String postId;
     public String content;
 
 }

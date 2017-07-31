@@ -7,5 +7,5 @@ import qa.domain.Post;
 /**
  * Created by ozgur on 7/29/17.
  */
-public interface CommentRepository extends CrudRepository<Comment, Long> {
+public interface CommentRepository extends CrudRepository<Comment, String> {
 }

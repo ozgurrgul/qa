@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import qa.domain.Post;
+import qa.domain.Token;
 import qa.repository.PostRepository;
 import qa.service.PostService;
 

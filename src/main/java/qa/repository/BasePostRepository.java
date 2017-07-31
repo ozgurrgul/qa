@@ -8,6 +8,6 @@ import qa.domain.Post;
 /**
  * Created by ozgur on 7/29/17.
  */
-public interface BasePostRepository extends CrudRepository<BasePost, Long> {
+public interface BasePostRepository extends CrudRepository<BasePost, String> {
 
 }

@@ -10,7 +10,7 @@ import javax.validation.ConstraintValidatorContext;
 /**
  * Created by ozgur on 7/30/17.
  */
-public class PostIdValidator implements ConstraintValidator<PostId, Long> {
+public class PostIdValidator implements ConstraintValidator<PostId, String> {
 
     @Autowired
     PostRepository postRepository;
@@ -20,7 +20,7 @@ public class PostIdValidator implements ConstraintValidator<PostId, Long> {
     }
 
     @Override
-    public boolean isValid(Long postId, ConstraintValidatorContext context) {
+    public boolean isValid(String postId, ConstraintValidatorContext context) {
         return postRepository.findById(postId).isPresent();
     }
 

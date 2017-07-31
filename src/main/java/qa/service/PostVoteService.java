@@ -30,9 +30,6 @@ import java.util.Optional;
 public class PostVoteService {
 
     @Autowired
-    PostRepository postRepository;
-
-    @Autowired
     PostVoteRepository postVoteRepository;
 
     @Autowired

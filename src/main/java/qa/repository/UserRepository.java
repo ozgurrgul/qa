@@ -7,7 +7,7 @@ package qa.repository;
 import org.springframework.data.repository.CrudRepository;
 import qa.domain.User;
 
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, String> {
 
     User getByEmailAndPassword(String email, String password);
     User getByEmail(String email);
