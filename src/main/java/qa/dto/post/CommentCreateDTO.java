@@ -1,4 +1,4 @@
-package qa.dto.comment;
+package qa.dto.post;
 
 import org.hibernate.validator.constraints.NotBlank;
 import qa.utils.validator.BasePostId;

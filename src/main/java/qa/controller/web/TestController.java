@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TestController {
 
     @RequestMapping("/")
-    public String greeting(Model model) {
-        model.addAttribute("_name", "xxxxx");
+    public String test(Model model) {
+        model.addAttribute("title", "asd asd ad");
         return "test";
     }
 

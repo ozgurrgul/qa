@@ -1,5 +1,8 @@
 package qa.utils.validator;
 
+import org.w3c.dom.events.UIEvent;
+import qa.domain.Post;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
