@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qa.domain.*;
-import qa.dto.comment.CommentCreateDTO;
+import qa.dto.post.CommentCreateDTO;
 import qa.dto.post.*;
 import qa.repository.*;
 
@@ -109,6 +109,21 @@ public class PostService {
         basePostRepository.save(parent);
 
         return comment;
+    }
+
+    @Transactional
+    public Object accept(AcceptAnswerDTO acceptAnswerDTO, User user) {
+
+        Answer answer = answerRepository.findById(acceptAnswerDTO.answerId).get();
+
+        if(answer.isAccepted()) {
+            return true;
+        }
+
+        answer.setAccepted(true);
+        answerRepository.save(answer);
+
+        return true;
     }
 
     @Transactional
