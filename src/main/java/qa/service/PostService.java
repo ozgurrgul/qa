@@ -87,7 +87,6 @@ public class PostService {
         answerRepository.save(answer);
 
         parent.addAnswer(answer);
-        parent.setAnswerCount(parent.getAnswerCount() + 1);
 
         postRepository.save(parent);
 
@@ -109,7 +108,6 @@ public class PostService {
 
         basePostRepository.save(parent);
 
-
         return comment;
     }
 
@@ -123,14 +121,14 @@ public class PostService {
     EntityManager em;
 
     @Transactional
-    public Object revisions(Long postId) {
+    public Object revisions(Long basePostId) {
 
         AuditReader auditReader = AuditReaderFactory.get(em);
-        List<Number> revisions = auditReader.getRevisions(BasePost.class, postId);
+        List<Number> revisions = auditReader.getRevisions(BasePost.class, basePostId);
         List<BasePost> posts = new ArrayList<>();
 
         for (Number revision : revisions) {
-            BasePost postRevision = auditReader.find(BasePost.class, postId, revision);
+            BasePost postRevision = auditReader.find(BasePost.class, basePostId, revision);
             posts.add(postRevision);
         }
 
