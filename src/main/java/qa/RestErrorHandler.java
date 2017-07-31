@@ -33,7 +33,8 @@ public class RestErrorHandler {
     class FieldErrorListDTO {
 
         public List<FieldErrorResponseDTO> fields = new ArrayList<>();
-        public String error_code = "FORM_VALIDATION_ERROR";
+        public String code = "FORM_VALIDATION_ERROR";
+        public String message = "Formda hatalar mevcut";
 
         public void addError(String field, String message) {
             fields.add(new FieldErrorResponseDTO(field, message));
