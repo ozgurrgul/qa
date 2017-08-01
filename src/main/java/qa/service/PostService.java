@@ -1,8 +1,9 @@
 package qa.service;
 
-import org.hibernate.envers.AuditReader;
-import org.hibernate.envers.AuditReaderFactory;
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import qa.domain.*;
@@ -10,10 +11,6 @@ import qa.dto.post.CommentCreateDTO;
 import qa.dto.post.*;
 import qa.exception.BadRequestException;
 import qa.repository.*;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,9 +121,8 @@ public class PostService {
     }
 
     @Transactional
-    public Object list() {
-        Iterable<Post> posts = postRepository.findAll();
-        return posts;
+    public Page<Post> listIndexPosts(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
     @Transactional
@@ -160,15 +156,21 @@ public class PostService {
 
         basePostRepository.save(updatingBasePost);
 
-        return "merged";
+        return null;
     }
-
-    @PersistenceContext
-    EntityManager em;
 
     @Transactional
     public Object revisions(String basePostId) {
         return basePostRevisionRepository.findByBasePostId(basePostId);
     }
 
+    public Post getPostById(String postId) {
+
+        Optional<Post> postOpt =  postRepository.findById(postId);
+        if(postOpt.isPresent() == false) {
+            return null;
+        }
+
+        return postOpt.get();
+    }
 }

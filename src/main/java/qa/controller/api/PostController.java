@@ -36,7 +36,6 @@ public class PostController {
         return postService.update(postCreateDTO, ControllerUtils.getUser(a));
     }
 
-
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "answer", method = RequestMethod.POST)
     public Object answer(@Valid @RequestBody PostAnswerDTO postAnswerDTO, Authentication a) {
@@ -68,15 +67,16 @@ public class PostController {
     }
 
     // To web controller
-    @RequestMapping(value = "list", method = RequestMethod.GET)
-    public Object list() {
-        return postService.list();
-    }
-
-    // To web controller
     @RequestMapping(value = "revisions", method = RequestMethod.GET)
     public Object revisions(@RequestParam("basePostId") String basePostId) {
         return postService.revisions(basePostId);
     }
+
+    // To web controller
+    @RequestMapping(value = "getPost", method = RequestMethod.GET)
+    public Object getPost(@RequestParam("postId") String postId) {
+        return postService.getPostById(postId);
+    }
+
 
 }

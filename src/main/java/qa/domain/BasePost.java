@@ -64,5 +64,9 @@ public class BasePost extends BaseDomain  {
         return super.equals(o);
     }
 
+    public int totalVoteCount() {
+        return upVoteCount - downVoteCount;
+    }
+
 
 }

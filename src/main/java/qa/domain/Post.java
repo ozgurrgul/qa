@@ -43,4 +43,13 @@ public class Post extends BasePost  {
     public boolean equals(Object o) {
         return super.equals(o);
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "answerCount=" + answerCount +
+                ", viewCount=" + viewCount +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

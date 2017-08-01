@@ -1,0 +1,65 @@
+<div th:replace="layout/header"/>
+
+<section class="content-container">
+
+    <div class="wrap">
+
+        <section class="left-content">
+
+            <div class="q-list">
+                <div class="q-item" th:each="post : ${posts}">
+                    <div class="q-left">
+
+                        <div class="q-vote">
+                            <div class="q-vote-up-area">
+                                <i class="fa fa-arrow-up"></i>
+                            </div><!--/q-vote-up-area-->
+                            <div class="q-vote-result-area">
+                                3
+                            </div><!--/q-vote-result-area-->
+                            <div class="q-vote-down-area">
+                                <i class="fa fa-arrow-down"></i>
+                            </div><!--/q-vote-down-area-->
+                        </div><!--/q-vote-->
+
+                    </div><!--/q-left-->
+
+                    <div class="q-right">
+                            <a class="q-title" th:href="@{'/p/' + ${post.id}}" th:text="${post.title}"></a>
+                        </h3><!--/q-title-->
+
+                        <div class="q-meta">
+                            <a href="" class="user-link">
+                                <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
+                                <span th:text="${post.user.displayName}"></span>
+                            </a>
+                            17 dk önce sordu
+                        </div><!--/q-meta-->
+
+                        <div class="q-tags">
+                            <a th:each="tag : ${post.tags}" th:text="${tag.tagName}"></a>
+                        </div>
+                    </div><!--/g-right-->
+                </div><!--/q-item-->
+
+            </div><!--/q-list-->
+
+            <div class="q-pagination">
+                <a href="" class="active">1</a>
+                <a href="">2</a>
+                <a href="">3</a>
+                <a href="">4</a>
+                <a href=""><i class="fa fa-angle-right"></i></a>
+            </div><!--/q-pagination-->
+
+
+        </section><!--/left-content-->
+
+        <div th:replace="layout/sidebar"/>
+
+    </div><!--/wrap-->
+
+</section><!--/content-container-->
+
+
+<div th:replace="layout/footer"/>

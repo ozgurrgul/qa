@@ -1,0 +1,164 @@
+<div th:replace="layout/header"/>
+
+<section class="content-container">
+
+    <div class="wrap">
+
+        <section class="left-content">
+
+            <div class="q-single">
+                <div class="q-tags">
+                    <a href="">wordpress</a>
+                    <a href="">php</a>
+                    <a href="">jquery</a>
+                </div><!--/q-tags-->
+
+                <h3 class="q-title" th:text="${post.title}"></h3><!--/q-title-->
+
+                <div class="q-content cf">
+
+                    <div class="q-left">
+                        <div class="q-vote">
+                            <div class="q-vote-up-area">
+                                <i class="fa fa-arrow-up"></i>
+                            </div><!--/q-vote-up-area-->
+                            <div class="q-vote-result-area">
+                                3
+                            </div><!--/q-vote-result-area-->
+                            <div class="q-vote-down-area">
+                                <i class="fa fa-arrow-down"></i>
+                            </div><!--/q-vote-down-area-->
+                        </div><!--/q-vote-->
+                    </div><!--/q-left-->
+
+
+                    <div class="q-right">
+                        <div class="q-text" th:text="${post.content}"></div><!--/q-text-->
+
+
+                        <div class="q-meta cf">
+                            <div class="q-meta-left">
+                                <a href="" class="user-link">
+                                    <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
+                                    <span th:text="${post.user.displayName}"></span>
+                                </a>
+                                17 dk önce sordu
+                            </div><!--/q-meta-left-->
+
+                            <div class="q-meta-right">
+                                <a class="add-comment-link">Yorum ekle</a>
+                                <a href="">Paylaş</a>
+                                <a href="">Düzenle</a>
+                                <a href=""><i class="fa fa-flag"></i></a>
+                            </div><!--/q-meta-right-->
+                        </div><!--/q-meta-->
+                        <div class="q-alt-replies-area">
+                                <div class="q-alt-replies" th:each="comment : ${post.comments}">
+                                <div class="alt-item">
+                                    <div class="alt-text" th:text="${comment.content}"></div><!--/text-->
+                                    <div class="alt-meta">
+                                        <a href="" th:text="${comment.user.displayName}"></a> - 30.07.2017
+                                    </div><!--/alt-meta-->
+                                </div><!--/alt-item-->
+                            </div><!--/q-alt-replies-->
+
+                            <!--
+                            <div class="q-reply-form">
+                                <span class="add-comment-link">Yorum ekle</span>
+
+                                <form class="cf">
+                                    <textarea class="textarea" name="" placeholder="Çözüm olmayan cevaplar vs..."></textarea>
+
+                                    <div class="bottom cf">
+                                        <button type="submit" class="button">Gönder</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                            -->
+
+                        </div><!--/q-alt-replies-area-->
+                    </div><!--/q-right-->
+                </div><!--/q-content-->
+            </div><!--/q-single-->
+
+            <div class="q-answers">
+                <h3 class="title" th:text="${#arrays.length(post.answers)} + ' cevap'"></h3>
+
+
+                <div class="loop">
+
+                    <div class="q-single q-answer" th:each="answer : ${post.answers}">
+
+                        <div class="q-content cf">
+
+                            <div class="q-left">
+                                <div class="q-vote">
+                                    <div class="q-vote-up-area">
+                                        <i class="fa fa-arrow-up"></i>
+                                    </div><!--/q-vote-up-area-->
+                                    <div class="q-vote-result-area">
+                                        3
+                                    </div><!--/q-vote-result-area-->
+                                    <div class="q-vote-down-area">
+                                        <i class="fa fa-arrow-down"></i>
+                                    </div><!--/q-vote-down-area-->
+
+                                    <div class="accept-area">
+                                        <i class="fa fa-check normal"></i>
+                                    </div>
+                                </div><!--/q-vote-->
+                            </div><!--/q-left-->
+
+                            <div class="q-right">
+                                <div class="q-text" th:text="${answer.content}"></div><!--/q-text-->
+
+                                <div class="q-meta cf">
+                                    <div class="q-meta-left">
+                                        <a href="" class="user-link">
+                                            <img src="https://i.stack.imgur.com/RIZKi.png?s=32&g=1" />
+                                            <span th:text="${post.user.displayName}"></span>
+                                        </a>
+                                        17 dk önce sordu
+                                    </div><!--/q-meta-left-->
+
+                                    <div class="q-meta-right">
+                                        <a class="add-comment-link">Yorum ekle</a>
+                                        <a href="">Paylaş</a>
+                                        <a href="">Düzenle</a>
+                                        <a href=""><i class="fa fa-flag"></i></a>
+                                    </div><!--/q-meta-right-->
+                                </div><!--/q-meta-->
+
+                                <div class="q-alt-replies-area">
+                                    <div class="q-alt-replies">
+
+                                    </div><!--/q-alt-replies-->
+
+
+                                    <!--
+                                    <div class="q-reply-form">
+                                        <span class="add-comment-link">Yorum ekle</span>
+
+                                        <form class="cf">
+                                            <textarea class="textarea" name="" placeholder="Çözüm olmayan cevaplar vs..."></textarea>
+
+                                            <div class="bottom cf">
+                                                <button type="submit" class="button">Gönder</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                    -->
+                                </div><!--/q-alt-replies-area-->
+                            </div><!--/q-right-->
+                        </div><!--/q-content-->
+                    </div><!--/q-single-->
+                </div><!--/loop-->
+            </div><!--/q-answers-->
+        </section><!--/left-content-->
+        <div th:replace="layout/sidebar"/>
+    </div><!--/wrap-->
+</section><!--/content-container-->
+
+<div th:replace="layout/footer"/>
