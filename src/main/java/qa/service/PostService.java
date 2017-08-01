@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import qa.domain.*;
 import qa.dto.post.CommentCreateDTO;
 import qa.dto.post.*;
+import qa.exception.BadRequestException;
 import qa.repository.*;
 
 import javax.persistence.EntityManager;
@@ -22,20 +23,12 @@ import java.util.Optional;
 @Service
 public class PostService {
 
-    @Autowired
-    PostRepository postRepository;
-
-    @Autowired
-    BasePostRepository basePostRepository;
-
-    @Autowired
-    AnswerRepository answerRepository;
-
-    @Autowired
-    TagRepository tagRepository;
-
-    @Autowired
-    CommentRepository commentRepository;
+    @Autowired PostRepository postRepository;
+    @Autowired BasePostRepository basePostRepository;
+    @Autowired AnswerRepository answerRepository;
+    @Autowired TagRepository tagRepository;
+    @Autowired CommentRepository commentRepository;
+    @Autowired BasePostRevisionRepository basePostRevisionRepository;
 
     @Transactional
     public Object create(PostCreateDTO postCreateDTO, User user) {
@@ -59,18 +52,24 @@ public class PostService {
     public Object update(PostUpdateDTO postCreateDTO, User user) {
 
         BasePost post = basePostRepository.findById(postCreateDTO.basePostId).get();
-        post.setTitle(postCreateDTO.title);
-        post.setContent(postCreateDTO.content);
-        post.setLastEditor(user);
+        BasePostRevision revision = new BasePostRevision();
 
-        for (TagDTO tagDTO : postCreateDTO.tags) {
+        revision.setUser(user);
+        revision.setApproved(false);
+        revision.setTitle(postCreateDTO.title);
+        revision.setContent(postCreateDTO.content);
+        revision.setBasePostId(post.getId());
+
+        /*
+        * for (TagDTO tagDTO : postCreateDTO.tags) {
             Optional<Tag> tag = tagRepository.findById(tagDTO.tagId);
             //tag.ifPresent(post::addTags);
         }
+        */
 
-        basePostRepository.save(post);
+        basePostRevisionRepository.save(revision);
 
-        return post;
+        return revision;
     }
 
     @Transactional
@@ -130,22 +129,46 @@ public class PostService {
         return posts;
     }
 
+    @Transactional
+    public Object mergeRevision(MergeRevisionDTO mergeRevisionDTO, User user) {
+
+        Optional<BasePostRevision> revisionOpt = basePostRevisionRepository.findById(mergeRevisionDTO.basePostId);
+
+        if(revisionOpt.isPresent() == false) {
+            throw new BadRequestException("Revizyon bulunamadı");
+        }
+
+        BasePostRevision rev = revisionOpt.get();
+
+        if(rev.isApproved()) {
+            throw new BadRequestException("Bu revizyon zaten merge edilmiş");
+        }
+
+        Optional<BasePost> updatingBasePostOpt = basePostRepository.findById(rev.getBasePostId());
+
+        if(updatingBasePostOpt.isPresent() == false) {
+            throw new BadRequestException("Update edilecek basePost bulunamadı");
+        }
+
+        BasePost updatingBasePost = updatingBasePostOpt.get();
+        updatingBasePost.setTitle(rev.getTitle());
+        updatingBasePost.setContent(rev.getContent());
+        updatingBasePost.setLastEditor(rev.getUser());
+
+        rev.setApproved(true);
+        basePostRevisionRepository.save(rev);
+
+        basePostRepository.save(updatingBasePost);
+
+        return "merged";
+    }
+
     @PersistenceContext
     EntityManager em;
 
     @Transactional
-    public Object revisions(Long basePostId) {
-
-        AuditReader auditReader = AuditReaderFactory.get(em);
-        List<Number> revisions = auditReader.getRevisions(BasePost.class, basePostId);
-        List<BasePost> posts = new ArrayList<>();
-
-        for (Number revision : revisions) {
-            BasePost postRevision = auditReader.find(BasePost.class, basePostId, revision);
-            posts.add(postRevision);
-        }
-
-        return posts;
+    public Object revisions(String basePostId) {
+        return basePostRevisionRepository.findByBasePostId(basePostId);
     }
 
 }

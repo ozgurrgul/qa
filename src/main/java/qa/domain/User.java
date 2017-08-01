@@ -1,5 +1,6 @@
 package qa.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class User extends BaseDomain implements UserDetails {
     @Column(unique=true)
     public String email;
 
+    @JsonIgnore
     //@Audited
     public String password;
 
@@ -38,6 +40,7 @@ public class User extends BaseDomain implements UserDetails {
         this.password = password;
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles()
@@ -46,31 +49,37 @@ public class User extends BaseDomain implements UserDetails {
                 .collect(Collectors.toList());
     }
 
+    @JsonIgnore
     @Override
     public String getPassword() {
         return password;
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return email;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

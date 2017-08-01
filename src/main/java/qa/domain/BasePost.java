@@ -15,10 +15,10 @@ import java.util.Set;
 @Entity
 public class BasePost extends BaseDomain  {
 
-    @Audited
+    //@Audited
     private String title;
 
-    @Audited
+    //@Audited
     private String content;
 
     private int downVoteCount;
@@ -26,14 +26,14 @@ public class BasePost extends BaseDomain  {
 
     private int commentCount;
 
-    @Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
+    //@Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
     @OneToOne
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "basePost")
     private Set<Comment> comments = new HashSet<>();
 
-    @Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
+    //@Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
     @OneToOne
     private User lastEditor;
 

@@ -14,10 +14,10 @@ import java.util.Objects;
 @Entity
 @Data
 @NoArgsConstructor
-@Audited
+//@Audited
 public class Answer extends BasePost {
 
-    @NotAudited
+    //@NotAudited
     private boolean isAccepted;
 
     @JsonIgnore
