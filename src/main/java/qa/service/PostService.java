@@ -74,7 +74,7 @@ public class PostService {
     }
 
     @Transactional
-    public Object answer(PostAnswerDTO postAnswerDTO, User user) {
+    public Object answer(PostAnswerDTO postAnswerDTO, User user){
 
         Post parent = postRepository.findById(postAnswerDTO.postId).get();
 

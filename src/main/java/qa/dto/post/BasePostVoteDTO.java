@@ -6,7 +6,7 @@ import qa.utils.validator.BasePostId;
 /**
  * Created by ozgur on 7/30/17.
  */
-public class PostVoteDTO {
+public class BasePostVoteDTO {
 
     @BasePostId
     public String postId;

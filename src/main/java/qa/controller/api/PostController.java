@@ -44,8 +44,8 @@ public class PostController {
 
     //@PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "vote", method = RequestMethod.POST)
-    public Object vote(@Valid @RequestBody PostVoteDTO postVoteDTO, Authentication a) {
-        return postVoteService.vote(postVoteDTO, ControllerUtils.getUser(a));
+    public Object vote(@Valid @RequestBody BasePostVoteDTO basePostVoteDTO, Authentication a) {
+        return postVoteService.vote(basePostVoteDTO, ControllerUtils.getUser(a));
     }
 
     //@PreAuthorize("isAuthenticated()")

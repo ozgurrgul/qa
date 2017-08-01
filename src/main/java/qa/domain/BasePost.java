@@ -51,6 +51,14 @@ public class BasePost extends BaseDomain  {
         this.commentCount--;
     }
 
+    public void upVote(User user) {
+        upVoteCount++;
+    }
+
+    public void downVote(User user, VoteType voteType) {
+        downVoteCount++;
+    }
+
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
