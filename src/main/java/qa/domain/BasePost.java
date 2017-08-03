@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -31,11 +29,18 @@ public class BasePost extends BaseDomain  {
     private User user;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "basePost")
-    private Set<Comment> comments = new HashSet<>();
+    private List<Comment> comments = new ArrayList<>();
 
     //@Audited(targetAuditMode=RelationTargetAuditMode.NOT_AUDITED)
     @OneToOne
     private User lastEditor;
+
+    @Enumerated(EnumType.STRING)
+    private BasePostType basePostType;
+
+    public BasePost (BasePostType basePostType) {
+        this.basePostType = basePostType;
+    }
 
     public void addComment(Comment comment) {
         comment.setBasePost(this);
@@ -51,11 +56,11 @@ public class BasePost extends BaseDomain  {
         this.commentCount--;
     }
 
-    public void upVote(User user) {
+    public void upVote() {
         upVoteCount++;
     }
 
-    public void downVote(User user, VoteType voteType) {
+    public void downVote() {
         downVoteCount++;
     }
 
@@ -66,6 +71,10 @@ public class BasePost extends BaseDomain  {
 
     public int totalVoteCount() {
         return upVoteCount - downVoteCount;
+    }
+
+    public boolean isPost() {
+        return this.basePostType == BasePostType.POST;
     }
 
 

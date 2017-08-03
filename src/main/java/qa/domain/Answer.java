@@ -13,8 +13,6 @@ import java.util.Objects;
 
 @Entity
 @Data
-@NoArgsConstructor
-//@Audited
 public class Answer extends BasePost {
 
     //@NotAudited
@@ -23,6 +21,10 @@ public class Answer extends BasePost {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Post parent;
+
+    public Answer() {
+        super(BasePostType.ANSWER);
+    }
 
     @Override
     public boolean equals(Object o) {

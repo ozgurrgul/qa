@@ -69,6 +69,7 @@ public class PostService {
         return revision;
     }
 
+    //TODO: notify post owner
     @Transactional
     public Object answer(PostAnswerDTO postAnswerDTO, User user){
 
@@ -87,6 +88,7 @@ public class PostService {
         return answer;
     }
 
+    //TODO: notify basePost owner
     @Transactional
     public Object comment(CommentCreateDTO commentCreateDTO, User user) {
 
@@ -105,6 +107,7 @@ public class PostService {
         return comment;
     }
 
+    //TODO: notify answer owner
     @Transactional
     public Object accept(AcceptAnswerDTO acceptAnswerDTO, User user) {
 
@@ -112,6 +115,12 @@ public class PostService {
 
         if(answer.isAccepted()) {
             return true;
+        }
+
+        Post post = postRepository.findById(acceptAnswerDTO.postId).get();
+
+        if(post.getUser().equals(user) == false) {
+            throw new BadRequestException("Sadece kendi postlarınıza yapılan cevapları kabul edebilirsiniz.");
         }
 
         answer.setAccepted(true);
@@ -126,7 +135,7 @@ public class PostService {
     }
 
     @Transactional
-    public Object mergeRevision(MergeRevisionDTO mergeRevisionDTO, User user) {
+    public Object acceptRevision(MergeRevisionDTO mergeRevisionDTO, User user) {
 
         Optional<BasePostRevision> revisionOpt = basePostRevisionRepository.findById(mergeRevisionDTO.basePostId);
 
@@ -137,7 +146,7 @@ public class PostService {
         BasePostRevision rev = revisionOpt.get();
 
         if(rev.isApproved()) {
-            throw new BadRequestException("Bu revizyon zaten merge edilmiş");
+            throw new BadRequestException("Bu revizyon zaten kabul edilmiş");
         }
 
         Optional<BasePost> updatingBasePostOpt = basePostRepository.findById(rev.getBasePostId());
@@ -156,7 +165,7 @@ public class PostService {
 
         basePostRepository.save(updatingBasePost);
 
-        return null;
+        return true;
     }
 
     @Transactional
@@ -164,9 +173,21 @@ public class PostService {
         return basePostRevisionRepository.findByBasePostId(basePostId);
     }
 
+    @Transactional
     public Post getPostById(String postId) {
 
         Optional<Post> postOpt =  postRepository.findById(postId);
+        if(postOpt.isPresent() == false) {
+            return null;
+        }
+
+        return postOpt.get();
+    }
+
+    @Transactional
+    public BasePost getBasePostById(String basePostId) {
+
+        Optional<BasePost> postOpt =  basePostRepository.findById(basePostId);
         if(postOpt.isPresent() == false) {
             return null;
         }

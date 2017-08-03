@@ -28,9 +28,14 @@ public class IndexController {
 
     @RequestMapping("/p/{postId}")
     public String post(Model model, @PathVariable("postId") String postId) {
-        model.addAttribute("title", "Single");
         model.addAttribute("post", postService.getPostById(postId));
         return "post";
+    }
+
+    @RequestMapping("/p/{basePostId}/edit")
+    public String edit(Model model, @PathVariable("basePostId") String basePostId) {
+        model.addAttribute("basePost", postService.getBasePostById(basePostId));
+        return "edit";
     }
 
 }

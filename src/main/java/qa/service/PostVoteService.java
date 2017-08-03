@@ -23,17 +23,28 @@ public class PostVoteService {
     @Transactional
     public Object vote(BasePostVoteDTO basePostVoteDTO, User user) {
 
-        BasePost post = basePostRepository.findById(basePostVoteDTO.postId).get();
-        PostVote postVote = postVoteRepository.findByUserAndPost(user, post);
+        BasePost basePost = basePostRepository.findById(basePostVoteDTO.basePostId).get();
+        PostVote postVote = postVoteRepository.findByUserAndPost(user, basePost);
         VoteType voteTypeRequest = basePostVoteDTO.voteType;
 
         // create new vote
         if(postVote == null) {
-            if(voteTypeRequest == VoteType.UP_VOTE) post.upVote(user);
+
+            if(voteTypeRequest == VoteType.UP_VOTE) basePost.upVote();
+            if(voteTypeRequest == VoteType.DOWN_VOTE) basePost.downVote();
+
+            postVote = new PostVote();
+            postVote.setUser(user);
+            postVote.setPost(basePost);
+            postVote.setVoteType(voteTypeRequest);
+
+            postVoteRepository.save(postVote);
+
+        } else {
+
         }
 
-
-        return basePostVoteDTO;
+        return null;
     }
 
 }

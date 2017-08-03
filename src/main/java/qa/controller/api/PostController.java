@@ -61,9 +61,9 @@ public class PostController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "merge-revision", method = RequestMethod.POST)
+    @RequestMapping(value = "accept-revision", method = RequestMethod.POST)
     public Object mergeRevision(@Valid @RequestBody MergeRevisionDTO mergeRevisionDTO, Authentication a) {
-        return postService.mergeRevision(mergeRevisionDTO, ControllerUtils.getUser(a));
+        return postService.acceptRevision(mergeRevisionDTO, ControllerUtils.getUser(a));
     }
 
     // To web controller
@@ -74,7 +74,7 @@ public class PostController {
 
     // To web controller
     @RequestMapping(value = "getPost", method = RequestMethod.GET)
-    public Object getPost(@RequestParam("postId") String postId) {
+    public Object getPost(@RequestParam("basePostId") String postId) {
         return postService.getPostById(postId);
     }
 

@@ -1,0 +1,29 @@
+<div th:replace="layout/header"/>
+
+<section class="content-container">
+
+    <div class="wrap">
+
+        <section>
+
+            <div th:if="${basePost.isPost()}">
+                <input
+                        type="text"
+                        th:value="${basePost.title}" id="base-post-title" />
+            </div>
+
+
+            <textarea
+                rows="12"
+                th:field="${basePost.content}"></textarea>
+
+            <br/>
+
+        </section>
+
+        <div th:replace="layout/sidebar"/>
+
+    </div><!--/wrap-->
+</section><!--/content-container-->
+
+<div th:replace="layout/footer"/>
